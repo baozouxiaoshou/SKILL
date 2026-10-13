@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    name: Validate Skill
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Check Python scripts syntax
+        run: |
+          python3 -m py_compile assets/figma-bridge/skill_to_figma.py
+          python3 -m py_compile assets/lark-bridge/lark_webhook.py
+          python3 -m py_compile assets/lark-bridge/lark_doc_generator.py
+          python3 -m py_compile assets/lark-bridge/lark_base_sync.py
+      
+      - name: Validate shell scripts
+        run: |
+          bash -n install.sh
+          bash -n verify.sh
+          bash -n package.sh
+          chmod +x install.sh verify.sh package.sh
+      
+      - name: Check required files
+        run: |
+          test -f SKILL.md
+          test -f README.md
+          test -f README.en.md
+          test -f CHANGELOG.md
+          test -f LICENSE
+          test -f CONTRIBUTING.md
+          test -f prompts/system.md
+          echo "All required files present"
+      
+      - name: Check Mermaid diagrams
+        run: |
+          # 检查 diagrams 目录下的 mermaid 模板数量
+          count=$(find assets/diagrams -name "*.md" -type f | wc -l)
+          if [ "$count" -lt 10 ]; then
+            echo "❌ Expected at least 10 Mermaid templates, found $count"
+            exit 1
+          fi
+          echo "✓ Found $count Mermaid templates"
+      
+      - name: Validate JSON files
+        run: |
+          python3 -c "import json; json.load(open('figma-plugin/manifest.json'))"
+          python3 -c "import json; json.load(open('assets/lark-bridge/config.example.json'))"
+      
+      - name: Test conversion script
+        run: |
+          # 准备测试输入
+          cat > /tmp/test_input.md << 'EOF'
+          # Test Skill
+          
+          ## 用户故事
+          
+          作为 [tester], 我想要 [test feature], [skill test].
+          
+          ## 验收标准
+          
+          ✅ Given test
+             When test
+             Then test
+          EOF
+          
+          # 测试转换器
+          python3 assets/figma-bridge/skill_to_figma.py /tmp/test_input.md --print | head -20
+          
+          # 测试 webhook dry-run
+          python3 assets/lark-bridge/lark_webhook.py /tmp/test_input.md --dry-run | head -5
+          
+          echo "✓ Conversion scripts work"

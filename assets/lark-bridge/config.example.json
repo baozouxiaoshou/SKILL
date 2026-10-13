@@ -1,0 +1,23 @@
+{
+  "lark_webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxxxxxxx",
+  "lark_app_id": "cli_xxxxxxxxxxxxx",
+  "lark_app_secret": "xxxxxxxxxxxxxxxxxxxxxxxx",
+  "lark_base_app_token": "bascnxxxxxxxxxxxxx",
+  "lark_base_table_id": "tblxxxxxxxxxxxxx",
+  "lark_doc_folder_token": "",
+  "output": {
+    "csv": "./output/stories.csv",
+    "json": "./output/stories.json",
+    "doc_payload": "./output/doc_payload.json"
+  },
+  "format": {
+    "use_card": true,
+    "card_header_color": "blue",
+    "include_mermaid": true,
+    "max_text_length": 4000
+  },
+  "sync": {
+    "auto_on_save": false,
+    "batch_size": 100
+  }
+}

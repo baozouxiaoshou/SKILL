@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 虚拟环境
+venv/
+env/
+.env
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+._*
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+
+# 测试
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# 打包产物
+dist/
+*.zip
+*.zip.sha256
+
+# OS
+Thumbs.db
+
+# 项目特定
+*.pyc
+*.zip
+
+# 保留 dist（用于发布）
+!dist/
+!dist/.gitkeep
+
+# Figma 插件构建产物
+node_modules/
+figma-plugin/code.js.map

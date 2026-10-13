@@ -1,0 +1,16 @@
+{
+  "name": "User Story Analyst",
+  "id": "user-story-analyst-plugin",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "reasoning": "本插件完全本地运行，不访问任何网络资源"
+  },
+  "description": "将用户故事分析师 Skill 的输出自动转换为 Figma 原型。支持 Mermaid 图、用户故事卡片、PRD 模板的自动生成。",
+  "helpUrl": "https://github.com/your-org/user-story-analyst",
+  "keywords": ["user story", "prototype", "mermaid", "PRD", "需求分析"]
+}
